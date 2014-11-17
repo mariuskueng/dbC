@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS Project_Teams (
 -- Aufgabe c)
 
 -- Insert data into persons table
-INSERT INTO Persons (name, email) VALUES 
+INSERT INTO Persons (name, email) VALUES
 ("Marius Küng", "marius.kueng@students.fhnw.ch"),
 ("Livio Bieri", "livio.bieri@students.fhnw.ch"),
 ("Yves Buschor", "yves.buschor@students.fhnw.ch"),
