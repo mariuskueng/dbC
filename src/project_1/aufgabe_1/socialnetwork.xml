@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="socialnetwork.xsl"?>
+<socialnetwork>
+    <person screenname="geilesiech" profilepic="http://pd.zhaw.ch/portraet/images/mino.jpg">
+        <name>Mino Bobic</name>
+        <age>34</age>
+        <email>mb@gmail.com</email>
+        <gender>male</gender>
+        <friends>
+            <person screenname="richkim"></person>
+        </friends>
+        <statuses>
+            <status>Ich bin de geilsti Siech wos je hets gits het!</status>
+            <status>Han ich scho erwähnt, dass ich en geile Siech bin?</status>
+        </statuses>
+    </person>
+    <person screenname="richkim" profilepic="http://blogs-images.forbes.com/jeffreydorfman/files/2014/07/670px-kim_kardashian_2011.jpg">
+        <name>Kim Kardashian</name>
+        <age>22</age>
+        <email>kim@iamrich.com</email>
+        <gender>female</gender>
+        <friends>
+            <person screenname="geilesiech"></person>
+        </friends>
+        <statuses>
+            <status>I'm the best person in the hole world!</status>
+        </statuses>
+    </person>
+    <person screenname="derbestebundesrat" profilepic="http://upload.wikimedia.org/wikipedia/commons/1/19/Ueli_Maurer_2011.jpg">
+        <name>Ueli Maurer</name>
+        <age>50</age>
+        <email>ueli@admin.ch</email>
+        <gender>male</gender>
+        <friends>
+            <person screenname="geilesiech"></person>
+            <person screenname="richkim"></person>
+        </friends>
+        <statuses>
+            <status>Es Chalet ohni Dach isch keis sichers Chalet!</status>
+        </statuses>
+    </person>
+    <person screenname="theloner" profilepic="http://www.doctormacro.com/Images/Wayne,%20John/Annex/Annex%20-%20Wayne,%20John%20(Chisum)_02.jpg">
+        <name>Han Keini Kollege</name>
+        <age>42</age>
+        <email>nofriends@gmail.com</email>
+        <gender>male</gender>
+        <statuses>
+            <status>Anyone?</status>
+        </statuses>
+    </person>
+</socialnetwork>
