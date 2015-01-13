@@ -11,7 +11,7 @@ import java.util.Set;
 public class Movie { 
     @Id
     @Column(name = "MOVIE_ID")
-    private long movieId;
+    private String movieId;
     
     @Column(name = "TITLE") 
     private String title;
@@ -26,8 +26,8 @@ public class Movie {
         inverseJoinColumns={@JoinColumn(name="ACTOR_ID")})
     private Set<Actor> actors = new HashSet<>();
     
-    public Movie(String title, Director director) {
-        this.movieId = (long) (Math.random()*1000);
+    public Movie(String movieId, String title, Director director) {
+        this.movieId = movieId;
         this.title = title;
         this.director = director;
     }
@@ -54,6 +54,22 @@ public class Movie {
     
     public void removeActor(Actor actor) {
         actors.remove(actor);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+           
+        if (!(obj instanceof Movie)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+
+        Movie movieClone = (Movie) obj;
+        boolean isEqual = this.movieId.compareTo(movieClone.movieId) == 0;
+        
+        return isEqual;
     }
 
 }

@@ -50,4 +50,20 @@ public abstract class MoviePerson {
     public void setAge(int age) {
         this.age = age;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+           
+        if (!(obj instanceof MoviePerson)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+
+        MoviePerson moviePersonClone = (MoviePerson) obj;
+        boolean isEqual = this.Id.compareTo(moviePersonClone.Id) == 0;
+        
+        return isEqual;
+    }
 }
