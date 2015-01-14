@@ -26,12 +26,41 @@ public class Movie {
         inverseJoinColumns={@JoinColumn(name="ACTOR_ID")})
     private Set<Actor> actors = new HashSet<>();
     
-    public Movie(String movieId, String title, Director director) {
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="SCREENPLAY_ID")
+    private Screenplay screenplay;
+    
+    public Movie(String movieId, String title, Director director, Screenplay screenplay) {
         this.movieId = movieId;
         this.title = title;
         this.director = director;
+        this.screenplay = screenplay;
     }
     
+    public String getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
+    }
+
+    public Director getDirector() {
+        return director;
+    }
+
+    public void setDirector(Director director) {
+        this.director = director;
+    }
+
+    public Screenplay getScreenplay() {
+        return screenplay;
+    }
+
+    public void setScreenplay(Screenplay screenplay) {
+        this.screenplay = screenplay;
+    }
+
     public String getTitle() {
         return title;
     }

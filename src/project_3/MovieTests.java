@@ -2,6 +2,7 @@ package project_3;
 
 import static org.junit.Assert.*;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Test;
@@ -62,6 +63,8 @@ public class MovieTests {
         config.addAnnotatedClass(Actor.class);
         config.addAnnotatedClass(Director.class);
         config.addAnnotatedClass(Movie.class);
+        config.addAnnotatedClass(Screenwriter.class);
+        config.addAnnotatedClass(Screenplay.class);
         config.configure("hibernate.cfg.xml");
         
         // some exception handling here would be awesome
@@ -93,8 +96,20 @@ public class MovieTests {
         
         session.save(directorChris);
         
+        // and a screenwriter
+        
+        Screenwriter screenwriter = new Screenwriter("SW01", "Jonathan", "Nolan", 37);
+        
+        session.save(screenwriter);
+        
+        // and a screenplay 
+        
+        Screenplay screenplay = new Screenplay("SD01", "Interstallar-2014", Calendar.getInstance(), screenwriter);
+        
+        session.save(screenplay);
+        
         // and of course a movie
-        classUnderTest = new Movie("MINTER", "Interstellar", directorChris);
+        classUnderTest = new Movie("MINTER", "Interstellar", directorChris, screenplay);
         classUnderTest.addActor(actorMatthew);
         classUnderTest.addActor(actorAnne);
         classUnderTest.addActor(actorJessica);
@@ -122,9 +137,27 @@ public class MovieTests {
     
     @Test
     @SuppressWarnings("unchecked")
+    public void testGetScreenplays () {
+        List<Screenplay> allScreenplays = session.createQuery("from Screenplay").list();
+        assertTrue(allScreenplays.contains(((Screenplay) new Screenplay("SD01", "Interstallar-2014", Calendar.getInstance(), new Screenwriter("SW01", "Jonathan", "Nolan", 37)))));
+    }
+    
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testGetScreenwriters () {
+        List<Screenwriter> allScreenwriters = session.createQuery("from Screenwriter").list();
+        assertTrue(allScreenwriters.contains(((Screenwriter) new Screenwriter("SW01", "Jonathan", "Nolan", 37))));
+    }
+    
+    @Test
+    @SuppressWarnings("unchecked")
     public void testGetMovies () {
         List<Movie> allMovies = session.createQuery("from Movie").list();
-        assertTrue(allMovies.contains(((Movie) new Movie("MINTER", "Interstellar", new Director("D01", "Christopher", "Nolan", 44)))));
+        assertTrue(allMovies.contains(((Movie) 
+                new Movie("MINTER", "Interstellar", new Director("D01", "Christopher", "Nolan", 44), 
+                new Screenplay("SP01", "Interstellar-2014", Calendar.getInstance(), 
+                new Screenwriter("SW01", "Jonathan", "Nolan", 37
+        ))))));
     }
     
     @Test
