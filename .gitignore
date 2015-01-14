@@ -1,7 +1,7 @@
 *.metadata
 *.settings
 *.DS_Store
-*bin/
+bin/*/**
 *.class
 
 # Package Files #
