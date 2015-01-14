@@ -131,10 +131,18 @@ public class MovieTests {
     @SuppressWarnings("unchecked")
     public void testUpdateMovie () {
         List<Movie> moviesQuery = session.createQuery("from Movie M where M.id = 'MINTER'").list();
-        Movie actorMatthew = moviesQuery.get(0);
-        actorMatthew.setTitle("The Room");
-        session.saveOrUpdate(actorMatthew);
-        assertEquals("The Room", actorMatthew.getTitle());
+        Movie m = moviesQuery.get(0);
+        m.setTitle("The Room");
+        session.saveOrUpdate(m);
+        assertEquals("The Room", m.getTitle());
+        
+        List<Movie> moviesQuery2 = session.createQuery("from Movie M where M.id = 'MINTER'").list();
+        List<Actor> allActors = session.createQuery("from Actor").list();
+        Actor actorJessica = allActors.get(2);
+        Movie m2 = moviesQuery2.get(0);
+        m2.removeActor(actorJessica);
+        session.saveOrUpdate(m2);
+        assertEquals(2, m2.getActors().size());
     }
     
     @Test
