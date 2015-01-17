@@ -59,6 +59,7 @@ public class MovieTests {
         
         Configuration config = new Configuration();
         
+        // add all class annotations
         config.addAnnotatedClass(MoviePerson.class);
         config.addAnnotatedClass(Actor.class);
         config.addAnnotatedClass(Director.class);
@@ -94,6 +95,7 @@ public class MovieTests {
         // and the director
         Director directorChris = new Director("D01", "Christopher", "Nolan", 44);
         
+        // add the director to the database
         session.save(directorChris);
         
         // and a screenwriter
@@ -104,7 +106,7 @@ public class MovieTests {
         
         // and a screenplay 
         
-        Screenplay screenplay = new Screenplay("SD01", "Interstallar-2014", Calendar.getInstance(), screenwriter);
+        Screenplay screenplay = new Screenplay("SP01", "Interstallar-2014", Calendar.getInstance(), screenwriter);
         
         session.save(screenplay);
         
@@ -123,6 +125,8 @@ public class MovieTests {
     @SuppressWarnings("unchecked")
     public void testGetDirectors () {
         List<Director> allDirectors = session.createQuery("from Director").list();
+ 
+        // check if the director is in the database 
         assertTrue(allDirectors.contains(((Director) new Director("D01", "Christopher", "Nolan", 44))));
     }
     
@@ -130,6 +134,8 @@ public class MovieTests {
     @SuppressWarnings("unchecked")
     public void testGetActors () {
         List<Actor> allActors = session.createQuery("from Actor").list();
+        
+        // check if the actors are in the database
         assertTrue(allActors.contains(((Actor) new Actor("A01", "Matthew", "McConaughey", 45))));
         assertTrue(allActors.contains(((Actor) new Actor("A02", "Anne", "Hathaway", 32))));
         assertTrue(allActors.contains(((Actor) new Actor("A03", "Jessica", "Chastain", 37))));
@@ -139,13 +145,17 @@ public class MovieTests {
     @SuppressWarnings("unchecked")
     public void testGetScreenplays () {
         List<Screenplay> allScreenplays = session.createQuery("from Screenplay").list();
-        assertTrue(allScreenplays.contains(((Screenplay) new Screenplay("SD01", "Interstallar-2014", Calendar.getInstance(), new Screenwriter("SW01", "Jonathan", "Nolan", 37)))));
+        
+        // check if the screenplay is in the database
+        assertTrue(allScreenplays.contains(((Screenplay) new Screenplay("SP01", "Interstallar-2014", Calendar.getInstance(), new Screenwriter("SW01", "Jonathan", "Nolan", 37)))));
     }
     
     @Test
     @SuppressWarnings("unchecked")
     public void testGetScreenwriters () {
         List<Screenwriter> allScreenwriters = session.createQuery("from Screenwriter").list();
+        
+        // check if the screenwriter is in the database
         assertTrue(allScreenwriters.contains(((Screenwriter) new Screenwriter("SW01", "Jonathan", "Nolan", 37))));
     }
     
@@ -153,6 +163,8 @@ public class MovieTests {
     @SuppressWarnings("unchecked")
     public void testGetMovies () {
         List<Movie> allMovies = session.createQuery("from Movie").list();
+        
+        // check if the movies are in the database
         assertTrue(allMovies.contains(((Movie) 
                 new Movie("MINTER", "Interstellar", new Director("D01", "Christopher", "Nolan", 44), 
                 new Screenplay("SP01", "Interstellar-2014", Calendar.getInstance(), 
@@ -163,27 +175,61 @@ public class MovieTests {
     @Test
     @SuppressWarnings("unchecked")
     public void testUpdateMovie () {
+    	// get the movie
         List<Movie> moviesQuery = session.createQuery("from Movie M where M.id = 'MINTER'").list();
         Movie m = moviesQuery.get(0);
+        // change the movie title
         m.setTitle("The Room");
         session.saveOrUpdate(m);
+        // check the new title
         assertEquals("The Room", m.getTitle());
         
+        // get the movie again
         List<Movie> moviesQuery2 = session.createQuery("from Movie M where M.id = 'MINTER'").list();
-        List<Actor> allActors = session.createQuery("from Actor").list();
-        Actor actorJessica = allActors.get(2);
         Movie m2 = moviesQuery2.get(0);
+        
+        // check the title from a new query
+        assertEquals("The Room", m2.getTitle());
+        
+        // and an actor
+        List<Actor> allActors = session.createQuery("from Actor where firstname = 'Jessica'").list();
+        Actor actorJessica = allActors.get(0);
+
+        // check the firstname
+        assertEquals("Jessica", actorJessica.getFirstname());
+
+        // remove an actor from this movie
         m2.removeActor(actorJessica);
         session.saveOrUpdate(m2);
+        
+        // check the new amount of actors participating
         assertEquals(2, m2.getActors().size());
     }
     
     @Test
     @SuppressWarnings("unchecked")
     public void testDeleteMovies () {
-        Query query = session.createQuery("delete from Movie M where M.id = 'MINTER'");
-        query.executeUpdate();
-        List<Movie> moviesQuery = session.createQuery("from Movie M where M.id = 'MINTER'").list();
+    	// get the movie
+    	List<Movie> moviesQuery = session.createQuery("from Movie M where M.id = 'MINTER'").list();
+    	Movie m = moviesQuery.get(0);
+    	
+    	// remove all actors from it
+    	for (Actor a : m.getActors()) {
+			System.out.println(a);
+			session.delete(a);
+		}
+    	
+    	// remove the movie
+    	session.delete(m);
+    	
+    	// new movie query
+        moviesQuery = session.createQuery("from Movie M where M.id = 'MINTER'").list();
+        
+        // check that the movie isn't available anymore in the database
         assertEquals(0, moviesQuery.size());
+        
+        // and also the actors
+        List<Actor> allActors = session.createQuery("from Actor").list();
+        assertEquals(0, allActors.size());
     }
 }
