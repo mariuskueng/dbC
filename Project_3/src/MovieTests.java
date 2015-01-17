@@ -215,7 +215,6 @@ public class MovieTests {
     	
     	// remove all actors from it
     	for (Actor a : m.getActors()) {
-			System.out.println(a);
 			session.delete(a);
 		}
     	
