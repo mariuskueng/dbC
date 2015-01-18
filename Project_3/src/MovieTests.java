@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.hibernate.*;
@@ -106,7 +107,7 @@ public class MovieTests {
         
         // and a screenplay 
         
-        Screenplay screenplay = new Screenplay("SP01", "Interstallar-2014", Calendar.getInstance(), screenwriter);
+        Screenplay screenplay = new Screenplay("SP01", "Interstellar-2014", Calendar.getInstance(), screenwriter);
         
         session.save(screenplay);
         
@@ -123,18 +124,27 @@ public class MovieTests {
     
     @Test
     @SuppressWarnings("unchecked")
-    public void testGetDirectors () {
-        List<Director> allDirectors = session.createQuery("from Director").list();
- 
-        // check if the director is in the database 
+    public void testCreateDirectors () {
+    	List<Director> allDirectors = session.createQuery("from Director").list();
+
+        // check if the director is in the database
         assertTrue(allDirectors.contains(((Director) new Director("D01", "Christopher", "Nolan", 44))));
+    }
+
+    @Test
+    public void testGetDirector () {
+    	Director director = classUnderTest.getDirector();
+    	assertEquals("D01", director.Id);
+    	assertEquals("Christopher", director.getFirstname());
+    	assertEquals("Nolan", director.getLastname());
+    	assertEquals(44, director.getAge());
     }
     
     @Test
     @SuppressWarnings("unchecked")
-    public void testGetActors () {
-        List<Actor> allActors = session.createQuery("from Actor").list();
-        
+    public void testCreateActors () {
+    	List<Actor> allActors = session.createQuery("from Actor").list();
+
         // check if the actors are in the database
         assertTrue(allActors.contains(((Actor) new Actor("A01", "Matthew", "McConaughey", 45))));
         assertTrue(allActors.contains(((Actor) new Actor("A02", "Anne", "Hathaway", 32))));
@@ -142,34 +152,63 @@ public class MovieTests {
     }
     
     @Test
-    @SuppressWarnings("unchecked")
-    public void testGetScreenplays () {
-        List<Screenplay> allScreenplays = session.createQuery("from Screenplay").list();
-        
-        // check if the screenplay is in the database
-        assertTrue(allScreenplays.contains(((Screenplay) new Screenplay("SP01", "Interstallar-2014", Calendar.getInstance(), new Screenwriter("SW01", "Jonathan", "Nolan", 37)))));
+    public void testGetActors () {
+    	Set<Actor> allActors = (Set<Actor>) classUnderTest.getActors();
+    	
+    	assertEquals(3, allActors.size());
     }
     
     @Test
     @SuppressWarnings("unchecked")
-    public void testGetScreenwriters () {
-        List<Screenwriter> allScreenwriters = session.createQuery("from Screenwriter").list();
-        
+    public void testCreateScreenplays () {
+    	List<Screenplay> allScreenplays = session.createQuery("from Screenplay").list();
+
+        // check if the screenplay is in the database
+        assertTrue(allScreenplays.contains(((Screenplay) new Screenplay("SP01", "Interstellar-2014", Calendar.getInstance(), new Screenwriter("SW01", "Jonathan", "Nolan", 37)))));
+    }
+    
+    @Test
+    public void testGetScreenplay () {
+    	Screenplay screenplay = classUnderTest.getScreenplay();
+    	assertEquals("Interstellar-2014", screenplay.getTitle());
+    }
+    
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testCreateScreenwriters () {
+    	List<Screenwriter> allScreenwriters = session.createQuery("from Screenwriter").list();
+
         // check if the screenwriter is in the database
         assertTrue(allScreenwriters.contains(((Screenwriter) new Screenwriter("SW01", "Jonathan", "Nolan", 37))));
     }
     
     @Test
+    public void testGetScreenwriter () {
+    	Screenwriter screenwriter = classUnderTest.getScreenplay().getScreenWriter();
+    	assertEquals("SW01", screenwriter.Id);
+    	assertEquals("Jonathan", screenwriter.getFirstname());
+    	assertEquals("Nolan", screenwriter.getLastname());
+    	assertEquals(37, screenwriter.getAge());
+    }
+    
+    @Test
     @SuppressWarnings("unchecked")
-    public void testGetMovies () {
-        List<Movie> allMovies = session.createQuery("from Movie").list();
-        
+    public void testCreateMovies () {
+    	List<Movie> allMovies = session.createQuery("from Movie").list();
+
         // check if the movies are in the database
-        assertTrue(allMovies.contains(((Movie) 
-                new Movie("MINTER", "Interstellar", new Director("D01", "Christopher", "Nolan", 44), 
-                new Screenplay("SP01", "Interstellar-2014", Calendar.getInstance(), 
+        assertTrue(allMovies.contains(((Movie)
+                new Movie("MINTER", "Interstellar", new Director("D01", "Christopher", "Nolan", 44),
+                new Screenplay("SP01", "Interstellar-2014", Calendar.getInstance(),
                 new Screenwriter("SW01", "Jonathan", "Nolan", 37
         ))))));
+    }
+    
+    @Test
+    public void testGetMovie () {
+    	Movie movie = classUnderTest;
+    	assertEquals("MINTER", movie.getMovieId());
+    	assertEquals("Interstellar", movie.getTitle());
     }
     
     @Test

@@ -141,7 +141,7 @@ public class MovieTests {
         List<Screenplay> allScreenplaysList = createTypedList(db.query(Screenplay.class));
 
         // check if the screenplay is in the database
-        assertTrue(allScreenplaysList.contains(((Screenplay) new Screenplay("SP01", "Interstallar-2014", Calendar.getInstance(), new Screenwriter("SW01", "Jonathan", "Nolan", 37)))));
+        assertTrue(allScreenplaysList.contains(((Screenplay) new Screenplay("SP01", "Interstellar-2014", Calendar.getInstance(), new Screenwriter("SW01", "Jonathan", "Nolan", 37)))));
     }
     
     @Test
