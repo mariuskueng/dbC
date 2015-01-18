@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
@@ -79,7 +80,7 @@ public class MovieTests {
 
         // and a screenplay
 
-        Screenplay screenplay = new Screenplay("SP01", "Interstallar-2014", Calendar.getInstance(), screenwriter);
+        Screenplay screenplay = new Screenplay("SP01", "Interstellar-2014", Calendar.getInstance(), screenwriter);
 
         db.store((Screenplay) screenplay);
 
@@ -99,9 +100,10 @@ public class MovieTests {
 		}
     	return list;
     }
+    
 
     @Test
-    public void testGetDirectors () {
+    public void testCreateDirectors () {
     	List<Director> allDirectors = createTypedList(db.query(Director.class));
 
         // check if the director is in the database
@@ -109,7 +111,16 @@ public class MovieTests {
     }
 
     @Test
-    public void testGetActors () {
+    public void testGetDirector () {
+    	Director director = classUnderTest.getDirector();
+    	assertEquals("D01", director.Id);
+    	assertEquals("Christopher", director.getFirstname());
+    	assertEquals("Nolan", director.getLastname());
+    	assertEquals(44, director.getAge());
+    }
+
+    @Test
+    public void testCreateActors () {
     	List<Actor> allActors = createTypedList(db.query(Actor.class));
 
         // check if the actors are in the database
@@ -117,25 +128,47 @@ public class MovieTests {
         assertTrue(allActors.contains(((Actor) new Actor("A02", "Anne", "Hathaway", 32))));
         assertTrue(allActors.contains(((Actor) new Actor("A03", "Jessica", "Chastain", 37))));
     }
+    
+    @Test
+    public void testGetActors () {
+    	Set<Actor> allActors = (Set<Actor>) classUnderTest.getActors();
+    	
+    	assertEquals(3, allActors.size());
+    }
 
     @Test
-    public void testGetScreenplays () {
+    public void testCreateScreenplays () {
         List<Screenplay> allScreenplaysList = createTypedList(db.query(Screenplay.class));
 
         // check if the screenplay is in the database
         assertTrue(allScreenplaysList.contains(((Screenplay) new Screenplay("SP01", "Interstallar-2014", Calendar.getInstance(), new Screenwriter("SW01", "Jonathan", "Nolan", 37)))));
     }
+    
+    @Test
+    public void testGetScreenplay () {
+    	Screenplay screenplay = classUnderTest.getScreenplay();
+    	assertEquals("Interstellar-2014", screenplay.getTitle());
+    }
 
     @Test
-    public void testGetScreenwriters () {
+    public void testCreateScreenwriters () {
     	List<Screenwriter> allScreenwriters = createTypedList(db.query(Screenwriter.class));
 
         // check if the screenwriter is in the database
         assertTrue(allScreenwriters.contains(((Screenwriter) new Screenwriter("SW01", "Jonathan", "Nolan", 37))));
     }
+    
+    @Test
+    public void testGetScreenwriter () {
+    	Screenwriter screenwriter = classUnderTest.getScreenplay().getScreenWriter();
+    	assertEquals("SW01", screenwriter.Id);
+    	assertEquals("Jonathan", screenwriter.getFirstname());
+    	assertEquals("Nolan", screenwriter.getLastname());
+    	assertEquals(37, screenwriter.getAge());
+    }
 
     @Test
-    public void testGetMovies () {
+    public void testCreateMovies () {
     	List<Movie> allMovies = createTypedList(db.query(Movie.class));
 
         // check if the movies are in the database
@@ -144,6 +177,13 @@ public class MovieTests {
                 new Screenplay("SP01", "Interstellar-2014", Calendar.getInstance(),
                 new Screenwriter("SW01", "Jonathan", "Nolan", 37
         ))))));
+    }
+    
+    @Test
+    public void testGetMovie () {
+    	Movie movie = classUnderTest;
+    	assertEquals("MINTER", movie.getMovieId());
+    	assertEquals("Interstellar", movie.getTitle());
     }
 
     @Test
