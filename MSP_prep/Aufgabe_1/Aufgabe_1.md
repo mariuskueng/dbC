@@ -112,14 +112,13 @@ sbb/station[transportmittel="T7"]/coordinates/height
 ### ii.
 
 ```
-???
-sbb/station[name="Winterthur"]/transportmittel/../../transportmittel_detail/transportmittel[name=text()]
+/sbb/transportmittel_detail/transportmittel[name = /sbb/station[name="Winterthur"]/transportmittel]
 ```
 
 ### iii.
 
 ```
-???
+/sbb/station[transportmittel = /sbb/transportmittel_detail/transportmittel[departure="Brugg AG"]/name]
 ```
 
 ## d)
