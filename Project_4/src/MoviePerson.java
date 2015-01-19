@@ -1,25 +1,11 @@
 
-
-import javax.persistence.*;
-
-@Entity
-@Table(name = "MoviePerson")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class MoviePerson {
-    
-    @Id
-    @Column(name = "MOVIEPERSON_ID")
+
     protected String Id;
-    
-    @Column(name = "FIRSTNAME")
     private String firstname;
-    
-    @Column(name = "LASTNAME")
     private String lastname;
-    
-    @Column(name = "AGE")
     private int age;
-    
+
     public MoviePerson(String Id, String firstname, String lastname, int age) {
         this.Id = Id;
         this.firstname = firstname;
@@ -50,10 +36,10 @@ public abstract class MoviePerson {
     public void setAge(int age) {
         this.age = age;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-           
+
         if (!(obj instanceof MoviePerson)) {
             return false;
         }
@@ -63,7 +49,7 @@ public abstract class MoviePerson {
 
         MoviePerson moviePersonClone = (MoviePerson) obj;
         boolean isEqual = this.Id.compareTo(moviePersonClone.Id) == 0;
-        
+
         return isEqual;
     }
 }
