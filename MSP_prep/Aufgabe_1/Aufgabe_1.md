@@ -54,22 +54,21 @@
       <track_departure>2</track_departure>
       <track_arrival>5</track_arrival>
       <transportmittel>S12</transportmittel>
-      </connection>
-      </schedule>
-      <transportmittel_detail>
-      <transportmittel>
+    </connection>
+  </schedule>
+  <transportmittel_detail>
+    <transportmittel>
       <name>T7</name>
       <departure>Zürich, Wollishofen</departure>
       <arrival>Stettbach, Bahnhof</arrival>
-      </transportmittel>
-      <transportmittel>
+    </transportmittel>
+    <transportmittel>
       <name>S12</name>
       <departure>Brugg AG</departure>
       <arrival>Winterthur, Seen</arrival>
-      </transportmittel>
-      </transportmittel_detail>
-      </sbb>
-
+    </transportmittel>
+  </transportmittel_detail>
+</sbb>
 ```
 
 ## b)
