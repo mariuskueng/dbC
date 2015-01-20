@@ -105,19 +105,20 @@
 
 ### i.
 
-```
+```xml
 sbb/station[transportmittel="T7"]/coordinates/height
 ```
 
 ### ii.
 
-```
+```xml
 /sbb/transportmittel_detail/transportmittel[name = /sbb/station[name="Winterthur"]/transportmittel]
 ```
+[https://stackoverflow.com/questions/28028515/xpath-nested-select](https://stackoverflow.com/questions/28028515/xpath-nested-select)
 
 ### iii.
 
-```
+```xml
 /sbb/station[transportmittel = /sbb/transportmittel_detail/transportmittel[departure="Brugg AG"]/name]
 ```
 
@@ -125,18 +126,18 @@ sbb/station[transportmittel="T7"]/coordinates/height
 
 ### 1)
 
-```
+```xml
 station
 ```
 
 ### 2)
 
-```
+```xml
 name
 ```
 
 ### 3)
-```
+```xml
 <xsl:for-each select="coordinates">
   <xsl:value-of select="lat"/>,
   <xsl:value-of select="long"/>,
@@ -145,7 +146,7 @@ name
 ```
 
 ### 4)
-```
+```xml
 <xsl:for-each select="transportmittel">
 <xsl:value-of select="current()"/>,
 </xsl:for-each>
