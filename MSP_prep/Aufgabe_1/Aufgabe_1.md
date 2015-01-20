@@ -111,10 +111,16 @@ sbb/station[transportmittel="T7"]/coordinates/height
 
 ### ii.
 
+**With XPATH 1.0**
 ```xml
 /sbb/transportmittel_detail/transportmittel[name = /sbb/station[name="Winterthur"]/transportmittel]
 ```
 [https://stackoverflow.com/questions/28028515/xpath-nested-select](https://stackoverflow.com/questions/28028515/xpath-nested-select)
+
+**With XPATH 2.0**
+```xml
+for $station in /sbb/station[name='Winterthur'] return /sbb/transportmittel_detail[transportmittel/name = $station/transportmittel]
+```
 
 ### iii.
 
