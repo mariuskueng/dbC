@@ -14,9 +14,17 @@ WHERE k.handynr = "077 445 83 97"
 AND z.name = "Tomate";
 
 -- ii. Schreiben Sie einen SQL-Ausdruck, welcher den Totalpreis aller Bestellungen aller Kunden in der Datenbank ausgibt.
--- Ihre Lösung soll sich auf Ihre in Teilaufgabe c) definierte Datenbank beziehen.
 
 SELECT k.name , SUM(b.preis) from Bestellungen b
 INNER JOIN Kunden k ON k.id = b.kunden_id
-WHERE k.id = b.kunden_id
+-- WHERE k.id = b.kunden_id
 GROUP BY k.name;
+
+-- iii.
+-- Schreiben Sie einen SQL-Ausdruck, welcher aufzeigt, welche Zutaten am beliebtesten (= am häufigsten bestellt) sind.
+
+SELECT z.name, COUNT(bz.zutaten_id) AS beliebtheit from Zutaten z
+INNER JOIN Bestellungen_Zutaten bz ON z.id = bz.zutaten_id
+-- WHERE z.id = bz.zutaten_id
+GROUP BY z.name
+ORDER BY beliebtheit DESC;
