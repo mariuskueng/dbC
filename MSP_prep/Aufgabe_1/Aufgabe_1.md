@@ -111,8 +111,14 @@ sbb/station[transportmittel="T7"]/coordinates/height
 
 ### ii.
 
+**With XPATH 1.0**
 ```
 /sbb/transportmittel_detail/transportmittel[name = /sbb/station[name="Winterthur"]/transportmittel]
+```
+
+**With XPATH 2.0**
+```
+for $station in /sbb/station[name='Winterthur'] return /sbb/transportmittel_detail[transportmittel/name = $station/transportmittel]
 ```
 
 ### iii.
