@@ -154,6 +154,6 @@ name
 ### 4)
 ```xml
 <xsl:for-each select="transportmittel">
-<xsl:value-of select="current()"/>,
+  <xsl:value-of select="current()"/>,
 </xsl:for-each>
 ```
