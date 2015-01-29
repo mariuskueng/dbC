@@ -4,6 +4,17 @@
 ![](Aufgabe_2i.png)
 
 ## b) Relationales Datenmodell
+
+```sql
+Users(**UserID**, Name, _StudentID_)
+Sandwiches(**SandwichID**, _UserID_, _KindID_, _SizeID_, SauceID)
+BreadKinds(**KindID**, Name, Image File)
+BreadSizes(**SizeID**, Name, Image File)
+Sauces(**SauceID**, Name, Image File)
+Ingredients(**IngredientID**, Name, Image File)
+SandwichesHaveIngredients(_SandwichID_, _IngredientID_)
+```
+### Visual
 ![](Aufgabe_2ii.png)
 
 ## c) SQL DDL
